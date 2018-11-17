@@ -1,0 +1,26 @@
+﻿@model IEnumerable<webcoremvc.Models.SiteMenuModel>
+@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+@{foreach (var item in Model.Where(s => s.IsParent == 1).Distinct().ToList())
+    {
+        <li class="treeview">
+            <a>
+                <i class="@item.MenuIcon"></i><span>@item.MenuTextEn</span>
+                <span class="pull-right-container">
+                    <i class="fa fa-angle-left pull-right"></i>
+                </span>
+            </a>
+            <ul class="treeview-menu">
+                @{foreach (var subitem in Model.Where(s => s.ParentMenuID == @item.MenuID).Distinct().ToList())
+                    {
+                        <li>
+                            <a href="@subitem.Link"><i class="fa fa-circle-o"></i>@subitem.MenuTextEn</a>
+                        </li>
+                    }
+                }
+            </ul>
+        </li>
+    }
+}
